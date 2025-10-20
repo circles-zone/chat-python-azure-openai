@@ -8,10 +8,10 @@ on:
 jobs:
   analyze:
     uses: circles-zone/github-workflows/.github/workflows/codeql-analysis.yml@BU-2737-Implement-CodeQL-Farah-Mae-Sumajit
-    with:
-      languages: 'python'
-      queries: 'security-extended'
     permissions:
       actions: read
       contents: read
       security-events: write
+    with:
+      languages: 'python'
+      queries: 'security-extended'
