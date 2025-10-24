@@ -19,7 +19,7 @@ jobs:
   analyze:
     name: CodeQL Analyze
     # uses: circles-zone/github-workflows/.github/workflows/codeql-analysis.yml@BU-2737-Implement-CodeQL-Farah-Mae-Sumajit
-    uses: ./github-workflows/.github/workflows/codeql-analysis.yml
+    uses: ./github-workflows/.github/workflows/codeql-analysis.yml@BU-2737-Implement-CodeQL-Farah-Mae-Sumajit
     permissions:
       actions: read
       contents: read
