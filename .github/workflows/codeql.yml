@@ -11,12 +11,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout private repo
-      run: git clone https://x-access-token:${{ secrets.GHA_WORKFLOWS_REPO_CONTENTS_READ_PAT }}@github.com/username/private-repo.git
+      # TODO Branch @BU-2737-Implement-CodeQL-Farah-Mae-Sumajit
+      run:
+        git clone https://x-access-token:${{ secrets.GHA_WORKFLOWS_REPO_CONTENTS_READ_PAT }}@github.com/talr/github-workflows.git github-worklows
+        checkout BU-2737-Implement-CodeQL-Farah-Mae-Sumajit
     # - name: CodeQL Analyze (Python, Security Extended)
   analyze:
     name: CodeQL Analyze
     # uses: circles-zone/github-workflows/.github/workflows/codeql-analysis.yml@BU-2737-Implement-CodeQL-Farah-Mae-Sumajit
-    uses: circles-zone/github-workflows/.github/workflows/codeql-analysis.yml@BU-2737-Implement-CodeQL-Farah-Mae-Sumajit
+    uses: ./github-workflows/.github/workflows/codeql-analysis.yml
     permissions:
       actions: read
       contents: read
