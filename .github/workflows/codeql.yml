@@ -6,24 +6,37 @@ on:
     branches: [ "main" ]
 
 jobs:
-  checkout-gha-reusable-workflows:
-    name: Checkout GHA workflows repo
+  # checkout-gha-reusable-workflows:
+  #   name: Checkout GHA workflows repo
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - name: Checkout private repo
+  #     # TODO Branch @BU-2737-Implement-CodeQL-Farah-Mae-Sumajit
+  #     run:
+  #       git clone https://x-access-token:${{ secrets.GHA_WORKFLOWS_REPO_CONTENTS_READ_PAT }}@github.com/talr/github-workflows.git github-worklows
+  #       checkout BU-2737-Implement-CodeQL-Farah-Mae-Sumajit
+    # - name: CodeQL Analyze (Python, Security Extended)
+  # analyze:
+  #   name: CodeQL Analyze
+  #   # uses: circles-zone/github-workflows/.github/workflows/codeql-analysis.yml@BU-2737-Implement-CodeQL-Farah-Mae-Sumajit
+  #   uses: ./github-workflows/.github/workflows/codeql-analysis.yml
+  #   permissions:
+  #     actions: read
+  #     contents: read
+  #     security-events: write
+  #   with:
+  #     languages: 'python'
+  #     queries: 'security-extended'
+
+  trigger-private-workflow:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout private repo
-      # TODO Branch @BU-2737-Implement-CodeQL-Farah-Mae-Sumajit
-      run:
-        git clone https://x-access-token:${{ secrets.GHA_WORKFLOWS_REPO_CONTENTS_READ_PAT }}@github.com/talr/github-workflows.git github-worklows
-        checkout BU-2737-Implement-CodeQL-Farah-Mae-Sumajit
-    # - name: CodeQL Analyze (Python, Security Extended)
-  analyze:
-    name: CodeQL Analyze
-    # uses: circles-zone/github-workflows/.github/workflows/codeql-analysis.yml@BU-2737-Implement-CodeQL-Farah-Mae-Sumajit
-    uses: ./github-workflows/.github/workflows/codeql-analysis.yml@BU-2737-Implement-CodeQL-Farah-Mae-Sumajit
-    permissions:
-      actions: read
-      contents: read
-      security-events: write
-    with:
-      languages: 'python'
-      queries: 'security-extended'
+      - name: Trigger private workflow via API
+        env:
+          PAT: ${{ secrets.GHA_WORKFLOWS_REPO_CONTENTS_READ_PAT }}
+        run: |
+          curl -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer $PAT" \
+            https://api.github.com/repos/circles-zone/github-workflows/.github/workflows/codeql-analysis.yml/dispatches \
+            -d '{"ref":"BU-2737-Implement-CodeQL-Farah-Mae-Sumajit","inputs":{"languages":"python,actions"}}'
