@@ -33,7 +33,7 @@ jobs:
     steps:
       - name: Trigger private workflow via API
         env:
-          PAT: ${{ secrets.GHA_WORKFLOWS_REPO_CONTENTS_READ_PAT }}
+          PAT: ${{ secrets.GHA_WORKFLOWS_WORKFLOWS_READ_WRITE_PAT }}
         run: |
           curl -X POST \
             -H "Accept: application/vnd.github+json" \
