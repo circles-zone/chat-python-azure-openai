@@ -6,7 +6,15 @@ on:
     branches: [ "main" ]
 
 jobs:
+  checkout-gha-reusable-workflows:
+    name: Checkout GHA workflows repo
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout private repo
+      run: git clone https://x-access-token:${{ secrets.GHA_WORKFLOWS_REPO_CONTENTS_READ_PAT }}@github.com/username/private-repo.git
+    # - name: CodeQL Analyze (Python, Security Extended)
   analyze:
+    name: CodeQL Analyze
     # uses: circles-zone/github-workflows/.github/workflows/codeql-analysis.yml@BU-2737-Implement-CodeQL-Farah-Mae-Sumajit
     uses: circles-zone/github-workflows/.github/workflows/codeql-analysis.yml@BU-2737-Implement-CodeQL-Farah-Mae-Sumajit
     permissions:
@@ -16,7 +24,3 @@ jobs:
     with:
       languages: 'python'
       queries: 'security-extended'
-
-
-      
-      
